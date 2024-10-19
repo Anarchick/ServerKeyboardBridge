@@ -1,0 +1,81 @@
+plugins {
+    id("java")
+}
+
+base {
+    archivesName = "ServerKeyboardBridge_Plugin"
+}
+
+group = 'fr.anarchick.skb'
+version = '1.0.0'
+
+def mcVersion = '1.20'
+def mcSubVersion = '.4'
+
+repositories {
+    maven {
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
+    }
+    //maven { url = "http://repo.choco.wtf/releases"; allowInsecureProtocol = true }
+    mavenCentral()
+    maven { url "https://jitpack.io" } // Github repositories
+}
+
+dependencies {
+    compileOnly 'org.jetbrains:annotations:20.1.0'
+    compileOnly group: 'io.papermc.paper', name: 'paper-api', version: mcVersion + mcSubVersion + '-R0.1-SNAPSHOT'
+    //compileOnly fileTree(include: ['*.jar'], dir: 'libs')
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+tasks {
+    compileJava {
+        // Set the release flag. This configures what version bytecode the compiler will emit, as well as what JDK APIs are usable.
+        // See https://openjdk.java.net/jeps/247 for more information.
+        options.release = 21
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+tasks.register('export') {
+    group = "other"
+    description = "build gradle into external folder"
+    def userHome = System.getenv('USERPROFILE').replace('\\', '/')
+    def fromFile = 'build/libs/' + base.archivesName.get() + '-' + version + '.jar'
+    def destinations = [
+            userHome + '/Documents/minecraft/Universe/server/FloatingRealms/plugins'
+    ]
+    doLast {
+        destinations.each {dest ->
+            def destDir = file(dest)
+            if (destDir.exists()) {
+                copy {
+                    from fromFile
+                    into destDir
+                }
+            } else {
+                println "The folder '" + destDir + "' does not exist"
+            }
+        }
+    }
+}
+
+tasks.build.finalizedBy(tasks.export)

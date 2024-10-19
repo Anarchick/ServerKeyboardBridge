@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "serverkeyboardbridge",
+	"version": "${version}",
+	"name": "ServerKeyboardBridge",
+	"description": "Allow Bukkit servers to received configured pressed key from the client",
+	"authors": [
+		"Anarchick"
+	],
+	"contact": {
+		"homepage": "https://github.com/Anarchick/ServerKeyboardBridge",
+		"sources": "https://github.com/Anarchick/ServerKeyboardBridge"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/skb/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"fr.anarchick.skb.ServerKeyboardBridge"
+		],
+		"client": [
+			"fr.anarchick.skb.ServerKeyboardBridgeClient"
+		],
+		"fabric-datagen": [
+			"fr.anarchick.skb.ServerKeyboardBridgeDataGenerator"
+		]
+	},
+	"mixins": [
+		"serverkeyboardbridge.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

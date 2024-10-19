@@ -1,0 +1,7 @@
+{
+  "serverKeyboardBridge.button": "Assignation des touches serveur...",
+  "serverKeyboardBridge.button.tooltip": "Ce serveur prend en charge les touches personnalisées. Ces touches ne sont actives que lorsque vous êtes sur ce serveur et SEULEMENT INGAME pour empêcher le hack de l’enregistreur de touches sur une autre application en dehors de Minecraft",
+  "serverKeyboardBridge.config.title": "Assignation des touches serveur",
+  "serverKeyboardBridge.toast.title": "Ce serveur prend en charge les assignations des touches personnalisées.",
+  "serverKeyboardBridge.toast.description": "Appuyer sur ECHAPE pour modifier les touches."
+}

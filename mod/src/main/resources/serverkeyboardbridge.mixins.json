@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "fr.anarchick.skb.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [],
+	"client": [
+		"KeyBindingMixin",
+		"MenuScreen"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

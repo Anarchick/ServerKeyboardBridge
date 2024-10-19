@@ -1,0 +1,7 @@
+{
+  "serverKeyboardBridge.button": "Server Key Binds...",
+  "serverKeyboardBridge.button.tooltip": "This server support custom key binds. This Keys are only active when you are on this server and ONLY INGAME to prevent key logger hack on other application out of Minecraft",
+  "serverKeyboardBridge.config.title": "Server Key Binds",
+  "serverKeyboardBridge.toast.title": "This server support custom key binds.",
+  "serverKeyboardBridge.toast.description": "Press ESCAPE to edit key binds."
+}

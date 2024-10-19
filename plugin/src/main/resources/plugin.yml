@@ -1,0 +1,14 @@
+name: ServerKeyboardBridge
+version: '${version}'
+main: fr.anarchick.skb.ServerKeyboardBridge
+api-version: '1.20'
+permissions:
+  serverkeyboardbridge.bypass.*:
+    description: Bypass some restrictions
+    children:
+      serverkeyboardbridge.bypass.kickPlayerIfNoMod: true
+      serverkeyboardbridge.bypass.messageIfNoMod: true
+  serverkeyboardbridge.bypass.kickPlayerIfNoMod:
+    description: Do not kick player if no mod
+  serverkeyboardbridge.bypass.messageIfNoMod:
+    description: Do not sent message to player if no mod

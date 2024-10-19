@@ -1,0 +1,5 @@
+ifNoModDetected:
+  kickPlayer: false
+  kickMessage: '<red>You need to have the mod <white>ServerKeyboardBridge <red>installed to join this server!'
+  sendMessage: false
+  message: '<green>You can have a better game experience if you install the mod <white>ServerKeyboardBridge'
