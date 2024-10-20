@@ -14,18 +14,18 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import screen.KeybindsScreen;
+import fr.anarchick.skb.screen.KeybindsScreen;
 
 @Environment(EnvType.CLIENT)
 @Mixin(GameMenuScreen.class)
-public abstract class MenuScreen extends Screen {
+public abstract class MenuScreenMixin extends Screen {
 
     @Unique
     private static final Text SERVER_KEY_BIND_BUTTON_TITLE = Text.translatable("serverKeyboardBridge.button").formatted(Formatting.AQUA, Formatting.BOLD);
     @Unique
     private static final Text TOOLTIP = Text.translatable("serverKeyboardBridge.button.tooltip").formatted(Formatting.GRAY);
 
-    protected MenuScreen(Text title) {
+    protected MenuScreenMixin(Text title) {
         super(title);
     }
 
@@ -41,6 +41,7 @@ public abstract class MenuScreen extends Screen {
             ).tooltip(Tooltip.of(TOOLTIP, TOOLTIP)).width(204).build(), 2, gridWidget.copyPositioner().marginTop(50));
         }
 
+        // The original code
         adder.add(widget, 2);
 
         return widget;

@@ -28,7 +28,6 @@ public class PluginMessageListeners implements PluginMessageListener {
     }
 
     private void decodeKeyEvent(Player player, byte[] message) {
-
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         boolean isPressed = in.readBoolean();
         boolean isInGUI = in.readBoolean();

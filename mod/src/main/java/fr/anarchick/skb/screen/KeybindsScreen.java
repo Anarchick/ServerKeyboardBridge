@@ -1,4 +1,4 @@
-package screen;
+package fr.anarchick.skb.screen;
 
 import fr.anarchick.skb.ServerKeyboardBridge;
 import fr.anarchick.skb.core.KeyEntry;

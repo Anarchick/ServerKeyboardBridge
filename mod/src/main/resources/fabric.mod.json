@@ -12,7 +12,7 @@
 		"sources": "https://github.com/Anarchick/ServerKeyboardBridge"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/skb/icon.png",
+	"icon": "assets/serverkeyboardbridge/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -28,6 +28,11 @@
 	"mixins": [
 		"serverkeyboardbridge.mixins.json"
 	],
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_3609": ["fr/anarchick/skb/screen/KeyReleasedInterface"]
+		}
+	},
 	"depends": {
 		"fabricloader": ">=0.16.0",
 		"minecraft": "~1.20.1",

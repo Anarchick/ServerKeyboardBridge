@@ -1,7 +1,7 @@
 package fr.anarchick.skb;
 
+import fr.anarchick.skb.event.KeyEvent;
 import fr.anarchick.skb.event.SkbJoinEvent;
-import fr.anarchick.skb.event.KeyPressedEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
@@ -80,13 +80,15 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
     }
 
     @EventHandler
-    public void keyPressed(KeyPressedEvent event) {
+    public void keyPressed(KeyEvent event) {
         Player player = event.getPlayer();
         NamespacedKey namespacedKey = event.getKey();
         boolean isPressed = event.isPressed();
+        boolean isInGui = event.isInGUI();
         System.out.println("player = " + player);
         System.out.println("namespacedKey = " + namespacedKey.asString());
         System.out.println("isPressed = " + isPressed);
+        System.out.println("isInGui = " + isInGui);
     }
 
     @EventHandler

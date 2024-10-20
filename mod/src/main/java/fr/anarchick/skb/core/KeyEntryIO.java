@@ -59,9 +59,10 @@ public class KeyEntryIO {
 
         try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(KEYBIND_FILE), StandardCharsets.UTF_8))) {
             ServerKeyboardBridge.getKeyEntries().forEach((id, keyEntry) -> writer.println(id.toString() + "=" + keyEntry.getKeyCode()));
-        } catch (Throwable throwable) {
-            ServerKeyboardBridge.LOGGER.error("Failed to write keybinding file", throwable);
+        } catch (Throwable e) {
+            ServerKeyboardBridge.LOGGER.error("Failed to write keybinding file", e);
         }
+
     }
 
 }
