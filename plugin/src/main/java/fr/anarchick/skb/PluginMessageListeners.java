@@ -47,6 +47,12 @@ public class PluginMessageListeners implements PluginMessageListener {
     }
 
     private void sendGreeting(Player player, byte[] message) {
+        if (!ServerKeyboardBridge.getInstance().getClientVersion(player).isEmpty()) {
+            // Player can only send handshake once
+            // This is to prevent client trying to overflow the server
+            return;
+        }
+
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         in.readByte();
         String clientVersion = in.readLine();
@@ -61,19 +67,23 @@ public class PluginMessageListeners implements PluginMessageListener {
         }
 
         Bukkit.getScheduler().runTaskLater(ServerKeyboardBridge.getInstance(), () -> {
-
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeByte(ServerKeyboardBridge.KEY_ENTRIES.size());
+            byte size = (byte) ServerKeyboardBridge.KEY_ENTRIES.size();
+            byte i = 0;
 
             for (KeyEntry keyEntry : ServerKeyboardBridge.KEY_ENTRIES) {
+                i++;
+
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeByte(size);
+                out.writeByte(i);
                 out.writeUTF(keyEntry.namespacedKey().asString());
                 out.writeUTF(keyEntry.name());
                 out.writeUTF(keyEntry.description());
                 out.writeUTF(keyEntry.category());
                 out.writeShort(keyEntry.keyCode());
-            }
 
-            player.sendPluginMessage(ServerKeyboardBridge.getInstance(), PluginChannels.LOAD_KEYS.getId(), out.toByteArray());
+                player.sendPluginMessage(ServerKeyboardBridge.getInstance(), PluginChannels.LOAD_KEYS.getId(), out.toByteArray());
+            }
 
         }, 20L);
     }
