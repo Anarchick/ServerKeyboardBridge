@@ -69,6 +69,7 @@ public class KeybindsScreen extends Screen {
     }
 
     public void update() {
+        ServerKeyboardBridge.reloadMapping();
         close();
         assert this.client != null;
         this.client.setScreen(new KeybindsScreen(this.parent, this.categoryId));
@@ -137,17 +138,20 @@ public class KeybindsScreen extends Screen {
     }
 
     public ButtonWidget createKeyButton(KeyEntry keyEntry) {
-        int keycode = keyEntry.getKeyCode();
-        MutableText text = Text.translatable(InputUtil.Type.KEYSYM.createFromCode(keycode).getTranslationKey());
+        int keyCode = keyEntry.getKeyCode();
+        InputUtil.Type type = (keyCode > 7) ? InputUtil.Type.KEYSYM : InputUtil.Type.MOUSE;
+        MutableText text = Text.translatable(type.createFromCode(keyCode).getTranslationKey());
         @Nullable Text description = keyEntry.getDescription();
 
         // Fix for the key translation
         // I don't know how Minecraft do that in his own keybindings screen
         if (text.getString().startsWith("key.keyboard.")) {
             text = Text.literal(text.getString().replace("key.keyboard.", "").toUpperCase());
+        } else if (text.getString().startsWith("key.mouse.")) {
+            text = Text.translatable("key.mouse", text.getString().replace("key.mouse.", ""));
         }
 
-        if (!keyEntry.isUnique() && keycode != InputUtil.UNKNOWN_KEY.getCode()) {
+        if (!keyEntry.isUnique() && keyCode != InputUtil.UNKNOWN_KEY.getCode()) {
             text = text.formatted(Formatting.RED);
         }
 
