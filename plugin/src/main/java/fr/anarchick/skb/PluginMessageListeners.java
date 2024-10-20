@@ -61,19 +61,23 @@ public class PluginMessageListeners implements PluginMessageListener {
         }
 
         Bukkit.getScheduler().runTaskLater(ServerKeyboardBridge.getInstance(), () -> {
-
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeByte(ServerKeyboardBridge.KEY_ENTRIES.size());
+            int size = ServerKeyboardBridge.KEY_ENTRIES.size();
+            int action = 0; // 0 = reset, 1 = add, 2 = end;
+            int i = 0;
 
             for (KeyEntry keyEntry : ServerKeyboardBridge.KEY_ENTRIES) {
+                i++;
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeByte((byte) action);
                 out.writeUTF(keyEntry.namespacedKey().asString());
                 out.writeUTF(keyEntry.name());
                 out.writeUTF(keyEntry.description());
                 out.writeUTF(keyEntry.category());
                 out.writeShort(keyEntry.keyCode());
-            }
 
-            player.sendPluginMessage(ServerKeyboardBridge.getInstance(), PluginChannels.LOAD_KEYS.getId(), out.toByteArray());
+                action = (i == size) ? 2 : 1; // Only send reset once for first packet
+                player.sendPluginMessage(ServerKeyboardBridge.getInstance(), PluginChannels.LOAD_KEYS.getId(), out.toByteArray());
+            }
 
         }, 20L);
     }

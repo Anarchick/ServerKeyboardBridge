@@ -9,21 +9,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class KeyEntry {
 
-    public static KeyEntry fromBuffer(PacketByteBuf buf) {
-        // must readByte before read String
-        buf.readByte();
-        Identifier id = buf.readIdentifier();
-        buf.readByte();
-        String name = buf.readString();
-        buf.readByte();
-        String description = buf.readString();
-        buf.readByte();
-        String category = buf.readString();
-        short keyCode = buf.readShort();
-
-        return new KeyEntry(id, name, description, category, keyCode);
-    }
-
     private final Identifier namespacedKey;
     private final Text name;
     private final @Nullable Text description;
