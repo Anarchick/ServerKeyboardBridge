@@ -48,11 +48,15 @@ public class ServerKeyboardBridge implements ModInitializer {
 		KEYCODE_ENTRIES.clear();
 	}
 
+	public static void reloadMapping() {
+		KEYCODE_ENTRIES.clear();
+		KEY_ENTRIES.forEach((id, keyEntry) -> KEYCODE_ENTRIES.put(keyEntry.getKeyCode(), keyEntry));
+	}
+
 	public static void reload() {
 		KeyEntryIO.loadConfig();
 		KeyEntryIO.saveConfig(); // Save new inputs
-		KEYCODE_ENTRIES.clear();
-		KEY_ENTRIES.forEach((id, keyEntry) -> KEYCODE_ENTRIES.put(keyEntry.getKeyCode(), keyEntry));
+		reloadMapping();
 	}
 
 }
