@@ -6,13 +6,21 @@ import fr.anarchick.skb.core.PluginChannels;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.CustomPayload;
+import org.jetbrains.annotations.ApiStatus;
 
-public class LoginEvent {
+@ApiStatus.Internal
+public record LoginEvent(String version) implements CustomPayload {
+
+    private static final Id<LoginEvent> CHANNEL = new CustomPayload.Id<>(PluginChannels.HANDSHAKE.getId());
+
+    @Override
+    public Id<? extends CustomPayload> getId() {
+        return CHANNEL;
+    }
 
     public static void onLogin() {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeString(ServerKeyboardBridge.VERSION);
-        ClientPlayNetworking.send(PluginChannels.HANDSHAKE.getId(), buf);
+        ClientPlayNetworking.send(new LoginEvent(ServerKeyboardBridge.VERSION));
         ServerKeyboardBridge.LOGGER.info("Sent handshake");
     }
 

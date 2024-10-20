@@ -18,8 +18,8 @@ public class ServerKeyboardBridgeClient implements ClientModInitializer {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> LoginEvent.onLogin());
 
         // Receive keybindings data from the server
-        ClientPlayNetworking.registerGlobalReceiver(PluginChannels.LOAD_KEYS.getId(),
-                (client, handler, buf, responseSender) -> KeyLoadEvent.onKeyLoad(client, buf));
+        ClientPlayNetworking.registerGlobalReceiver(KeyLoadEvent.CHANNEL,
+                KeyLoadEvent::load);
 
         ServerKeyboardBridge.LOGGER.info("ServerKeyboardBridgeClient initialized");
     }

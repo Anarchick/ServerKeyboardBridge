@@ -10,7 +10,7 @@ public enum PluginChannels {
     private final Identifier id;
 
     PluginChannels() {
-        this.id = new Identifier(ServerKeyboardBridge.MOD_ID, name().toLowerCase());
+        this.id = Identifier.of(ServerKeyboardBridge.MOD_ID, name().toLowerCase());
     }
 
     public Identifier getId() {

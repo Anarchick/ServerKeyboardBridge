@@ -38,7 +38,7 @@ public class KeyEntryIO {
 
                 if (PATTERN.matcher(line).matches()) {
                     String[] split = line.split("=");
-                    Identifier id = new Identifier(split[0]);
+                    Identifier id = Identifier.of(split[0]);
                     short keyCode = Short.parseShort(split[1]);
 
                     ServerKeyboardBridge.getKeyEntry(id).ifPresent(keyEntry -> keyEntry.setKeyCode(keyCode));
