@@ -13,18 +13,19 @@ import java.util.ArrayList;
 public class KeyLoadEvent {
 
     public static void onKeyLoad(MinecraftClient client, PacketByteBuf buf) {
-        byte action = buf.readByte();
+        byte size = buf.readByte();
+        byte i = buf.readByte();
         KeyEntry keyEntry = fromBuffer(buf);
 
         // Read data async and then use client.execute() after for thread safety.
         client.execute(() -> {
-            if (action == 0) { // only the first packet will reset the key entries
+            if (i == 0) { // only the first packet will reset the key entries
                 ServerKeyboardBridge.clearKeyEntries();
             }
 
             ServerKeyboardBridge.addKeyEntry(keyEntry);
 
-            if (action == 2) { // last packet
+            if (i == size) { // last packet
                 ServerKeyboardBridge.reload();
             }
 
