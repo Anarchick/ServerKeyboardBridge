@@ -19,8 +19,15 @@ public class KeyLoadEvent {
 
         // Read data async and then use client.execute() after for thread safety.
         client.execute(() -> {
-            if (i == 0) { // only the first packet will reset the key entries
+
+            if (i == 1) { // only the first packet will reset the key entries
                 ServerKeyboardBridge.clearKeyEntries();
+                client.getToastManager().add(
+                        SystemToast.create(client, SystemToast.Type.NARRATOR_TOGGLE,
+                                Text.translatable("serverKeyboardBridge.toast.title"),
+                                Text.translatable("serverKeyboardBridge.toast.description")
+                        )
+                );
             }
 
             ServerKeyboardBridge.addKeyEntry(keyEntry);
@@ -29,28 +36,17 @@ public class KeyLoadEvent {
                 ServerKeyboardBridge.reload();
             }
 
-            client.getToastManager().add(
-                    SystemToast.create(client, SystemToast.Type.NARRATOR_TOGGLE,
-                            Text.translatable("serverKeyboardBridge.toast.title"),
-                            Text.translatable("serverKeyboardBridge.toast.description")
-                    )
-            );
+
         });
 
     }
 
     private static KeyEntry fromBuffer(PacketByteBuf buf) {
-        // must readByte before read String
-        buf.readByte();
         Identifier id = buf.readIdentifier();
-        buf.readByte();
         String name = buf.readString();
-        buf.readByte();
         String description = buf.readString();
-        buf.readByte();
         String category = buf.readString();
         short keyCode = buf.readShort();
-
         return new KeyEntry(id, name, description, category, keyCode);
     }
 

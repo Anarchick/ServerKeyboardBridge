@@ -1,4 +1,6 @@
-package fr.anarchick.skb;
+package fr.anarchick.skb.core;
+
+import fr.anarchick.skb.ServerKeyboardBridge;
 
 public enum PluginChannels {
 
