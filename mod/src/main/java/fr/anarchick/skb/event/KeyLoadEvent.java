@@ -8,8 +8,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-
 public class KeyLoadEvent {
 
     public static void onKeyLoad(MinecraftClient client, PacketByteBuf buf) {
