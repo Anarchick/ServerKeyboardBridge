@@ -1,5 +1,6 @@
-package fr.anarchick.skb;
+package fr.anarchick.skb.core;
 
+import fr.anarchick.skb.ServerKeyboardBridge;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
