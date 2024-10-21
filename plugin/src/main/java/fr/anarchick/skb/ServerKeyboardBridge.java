@@ -62,7 +62,7 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
 
         getServer().getPluginManager().registerEvents(this, this);
 
-        test();
+        //test();
 
         saveDefaultConfig();
         this.kickPlayerIfNoMod = getConfig().getBoolean("ifNoModDetected.kickPlayer", false);
@@ -90,18 +90,6 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
             return false;
         }
         return KEY_ENTRIES.add(keyEntry);
-    }
-
-    @EventHandler
-    public void keyPressed(KeyEvent event) {
-        Player player = event.getPlayer();
-        NamespacedKey namespacedKey = event.getKey();
-        boolean isPressed = event.isPressed();
-        boolean isInGui = event.isInGUI();
-        System.out.println("player = " + player);
-        System.out.println("namespacedKey = " + namespacedKey.asString());
-        System.out.println("isPressed = " + isPressed);
-        System.out.println("isInGui = " + isInGui);
     }
 
     @EventHandler
@@ -153,5 +141,19 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         registerKey(keyEntry);
         registerKey(keyEntry2);
     }
+
+    /*
+    @EventHandler
+    public void keyPressed(KeyEvent event) {
+        Player player = event.getPlayer();
+        NamespacedKey namespacedKey = event.getKey();
+        boolean isPressed = event.isPressed();
+        boolean isInGui = event.isInGUI();
+        System.out.println("player = " + player);
+        System.out.println("namespacedKey = " + namespacedKey.asString());
+        System.out.println("isPressed = " + isPressed);
+        System.out.println("isInGui = " + isInGui);
+    }
+     */
 
 }
