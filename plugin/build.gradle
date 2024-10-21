@@ -29,6 +29,8 @@ repositories {
 dependencies {
     compileOnly 'org.jetbrains:annotations:20.1.0'
     compileOnly group: 'io.papermc.paper', name: 'paper-api', version: mcVersion + mcSubVersion + '-R0.1-SNAPSHOT'
+    compileOnly group: 'io.netty', name: 'netty-buffer', version: '4.1.114.Final'
+    compileOnly group: 'io.netty', name: 'netty-handler', version: '4.1.114.Final'
     //compileOnly fileTree(include: ['*.jar'], dir: 'libs')
 }
 
@@ -61,7 +63,8 @@ tasks.register('export') {
     def userHome = System.getenv('USERPROFILE').replace('\\', '/')
     def fromFile = 'build/libs/' + base.archivesName.get() + '-' + version + '.jar'
     def destinations = [
-            userHome + '/Documents/minecraft/Universe/server/FloatingRealms/plugins'
+            //userHome + '/Documents/minecraft/Universe/server/FloatingRealms/plugins'
+            userHome + '/Documents/minecraft/SkriptPacket/1.21.1/plugins'
     ]
     doLast {
         destinations.each {dest ->
