@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Function7;
 import fr.anarchick.skb.ServerKeyboardBridge;
 import fr.anarchick.skb.core.KeyEntry;
 import fr.anarchick.skb.core.PluginChannels;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.network.RegistryByteBuf;
