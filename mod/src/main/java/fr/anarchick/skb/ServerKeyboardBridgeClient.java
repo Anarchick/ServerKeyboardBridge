@@ -24,7 +24,7 @@ public class ServerKeyboardBridgeClient implements ClientModInitializer {
 
         PayloadTypeRegistry.playS2C().register(KeyLoadEvent.CHANNEL, KeyLoadEvent.CODEC);
         ClientPlayNetworking.registerGlobalReceiver(KeyLoadEvent.CHANNEL,
-                KeyLoadEvent::load);
+                (payload, context) -> payload.load());
 
         ServerKeyboardBridge.LOGGER.info("ServerKeyboardBridgeClient initialized");
     }

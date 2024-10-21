@@ -7,7 +7,6 @@ import fr.anarchick.skb.core.PluginChannels;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -70,7 +69,7 @@ public record KeyLoadEvent(byte size, byte i, Identifier identifier, String name
         return CHANNEL;
     }
 
-    public void load(ClientPlayNetworking.Context context) {
+    public void load() {
         MinecraftClient client = MinecraftClient.getInstance();
         KeyEntry keyEntry = new KeyEntry(identifier, name, description, category, keyCode);
 
@@ -95,14 +94,6 @@ public record KeyLoadEvent(byte size, byte i, Identifier identifier, String name
             }
 
         });
-
-    private static KeyEntry fromBuffer(PacketByteBuf buf) {
-        Identifier id = buf.readIdentifier();
-        String name = buf.readString();
-        String description = buf.readString();
-        String category = buf.readString();
-        short keyCode = buf.readShort();
-        return new KeyEntry(id, name, description, category, keyCode);
     }
 
 }
