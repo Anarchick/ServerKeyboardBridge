@@ -77,7 +77,6 @@ public record KeyLoadEvent(byte size, byte i, Identifier identifier, String name
 
             if (i == 1) { // only the first packet will reset the key entries
                 ServerKeyboardBridge.clearKeyEntries();
-
                 client.getToastManager().add(
                         SystemToast.create(client, SystemToast.Type.NARRATOR_TOGGLE,
                                 Text.translatable("serverKeyboardBridge.toast.title"),
