@@ -1,5 +1,8 @@
 package fr.anarchick.skb;
 
+import fr.anarchick.skb.core.KeyEntry;
+import fr.anarchick.skb.core.PluginChannels;
+import fr.anarchick.skb.core.PluginMessageListeners;
 import fr.anarchick.skb.event.KeyEvent;
 import fr.anarchick.skb.event.SkbJoinEvent;
 import net.kyori.adventure.text.Component;
@@ -17,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit.event.Listener {
 
@@ -24,9 +28,9 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
     private static java.util.logging.@NotNull Logger LOGGER = Bukkit.getLogger();
     private static ServerKeyboardBridge INSTANCE = null;
     private static final int KEY_ENTRIES_LIMIT = 20;
-    static final HashSet<KeyEntry> KEY_ENTRIES = new HashSet<>();
+    private static final @ApiStatus.Internal HashSet<KeyEntry> KEY_ENTRIES = new HashSet<>();
     private static final HashMap<Player, String> BRIDGE_PLAYERS = new HashMap<>();
-    static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
+    public static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private final PluginMessageListeners pluginMessageListeners = new PluginMessageListeners();
     private boolean kickPlayerIfNoMod;
@@ -36,6 +40,15 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
 
     public static ServerKeyboardBridge getInstance() {
         return INSTANCE;
+    }
+
+    // Use iterator for security, this prevents the set from being modified and larger than limit
+    public static Iterator<KeyEntry> getKeyEntries() {
+        return KEY_ENTRIES.iterator();
+    }
+
+    public static int getKeyEntriesSize() {
+        return KEY_ENTRIES.size();
     }
 
     @Override
