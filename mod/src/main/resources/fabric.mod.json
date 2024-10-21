@@ -13,16 +13,13 @@
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/serverkeyboardbridge/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"main": [
 			"fr.anarchick.skb.ServerKeyboardBridge"
 		],
 		"client": [
 			"fr.anarchick.skb.ServerKeyboardBridgeClient"
-		],
-		"fabric-datagen": [
-			"fr.anarchick.skb.ServerKeyboardBridgeDataGenerator"
 		]
 	},
 	"mixins": [
@@ -34,7 +31,7 @@
 		}
 	},
 	"depends": {
-		"fabricloader": ">=0.16.0",
+		"fabricloader": "*",
 		"minecraft": "~1.20.1",
 		"java": ">=17",
 		"fabric-api": "*"
