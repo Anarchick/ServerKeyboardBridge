@@ -1,13 +1,12 @@
 package fr.anarchick.skb.core;
 
 import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import fr.anarchick.skb.ServerKeyboardBridge;
-import fr.anarchick.skb.event.SkbJoinEvent;
 import fr.anarchick.skb.event.KeyEvent;
 import fr.anarchick.skb.event.KeyPressedEvent;
 import fr.anarchick.skb.event.KeyReleaseEvent;
+import fr.anarchick.skb.event.SkbJoinEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -77,19 +76,25 @@ public class PluginMessageListeners implements PluginMessageListener {
                 KeyEntry keyEntry = it.next();
                 i++;
 
-                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                out.writeByte(size);
-                out.writeByte(i);
-                out.writeUTF(keyEntry.namespacedKey().asString());
-                out.writeUTF(keyEntry.name());
-                out.writeUTF(keyEntry.description());
-                out.writeUTF(keyEntry.category());
-                out.writeShort(keyEntry.keyCode());
-
-                player.sendPluginMessage(ServerKeyboardBridge.getInstance(), PluginChannels.LOAD_KEYS.getId(), out.toByteArray());
+                byte[] bytes = getBytes(size, i, keyEntry);
+                player.sendPluginMessage(ServerKeyboardBridge.getInstance(), PluginChannels.LOAD_KEYS.getId(), bytes);
             }
 
         }, 20L);
+    }
+
+    private static byte @NotNull [] getBytes(byte size, byte i, KeyEntry keyEntry) {
+        FriendlyByteBuf out = new FriendlyByteBuf();
+        out.writeByte(size);
+        out.writeByte(i);
+        out.writeUtf(keyEntry.namespacedKey().asString());
+        out.writeUtf(keyEntry.name());
+        out.writeUtf(keyEntry.description());
+        out.writeUtf(keyEntry.category());
+        out.writeShort(keyEntry.keyCode());
+        byte[] bytes = new byte[out.readableBytes()];
+        out.readBytes(bytes);
+        return bytes;
     }
 
 }
