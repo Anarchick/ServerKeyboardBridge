@@ -1,7 +1,8 @@
-package fr.anarchick.skb;
+package fr.anarchick.skb.core;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import fr.anarchick.skb.ServerKeyboardBridge;
 import fr.anarchick.skb.event.SkbJoinEvent;
 import fr.anarchick.skb.event.KeyEvent;
 import fr.anarchick.skb.event.KeyPressedEvent;
@@ -13,6 +14,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Iterator;
 
 public class PluginMessageListeners implements PluginMessageListener {
 
@@ -67,10 +70,11 @@ public class PluginMessageListeners implements PluginMessageListener {
         }
 
         Bukkit.getScheduler().runTaskLater(ServerKeyboardBridge.getInstance(), () -> {
-            byte size = (byte) ServerKeyboardBridge.KEY_ENTRIES.size();
+            byte size = (byte) ServerKeyboardBridge.getKeyEntriesSize();
             byte i = 0;
 
-            for (KeyEntry keyEntry : ServerKeyboardBridge.KEY_ENTRIES) {
+            for (Iterator<KeyEntry> it = ServerKeyboardBridge.getKeyEntries(); it.hasNext(); ) {
+                KeyEntry keyEntry = it.next();
                 i++;
 
                 try {
