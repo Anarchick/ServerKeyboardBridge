@@ -76,6 +76,7 @@ public record KeyLoadEvent(byte size, byte i, Identifier identifier, String name
 
         // Read data async and then use client.execute() after for thread safety.
         client.execute(() -> {
+
             if (i == 1) { // only the first packet will reset the key entries
                 ServerKeyboardBridge.clearKeyEntries();
 
@@ -95,6 +96,13 @@ public record KeyLoadEvent(byte size, byte i, Identifier identifier, String name
 
         });
 
+    private static KeyEntry fromBuffer(PacketByteBuf buf) {
+        Identifier id = buf.readIdentifier();
+        String name = buf.readString();
+        String description = buf.readString();
+        String category = buf.readString();
+        short keyCode = buf.readShort();
+        return new KeyEntry(id, name, description, category, keyCode);
     }
 
 }

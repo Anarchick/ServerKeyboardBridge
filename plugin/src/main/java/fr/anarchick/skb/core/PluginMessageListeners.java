@@ -1,13 +1,13 @@
 package fr.anarchick.skb.core;
 
 import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import fr.anarchick.skb.ServerKeyboardBridge;
 import fr.anarchick.skb.event.SkbJoinEvent;
 import fr.anarchick.skb.event.KeyEvent;
 import fr.anarchick.skb.event.KeyPressedEvent;
 import fr.anarchick.skb.event.KeyReleaseEvent;
-import fr.anarchick.skb.core.FriendlyByteBuf;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
