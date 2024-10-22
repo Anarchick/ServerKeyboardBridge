@@ -39,10 +39,11 @@ public abstract class MenuScreenMixin extends Screen {
                         this.client.setScreen(new KeybindsScreen(this, 0));
                     }
             ).tooltip(Tooltip.of(TOOLTIP, TOOLTIP)).width(204).build(), 2, gridWidget.copyPositioner().marginTop(50));
+            adder.add(widget, 2);
+        } else {
+            // The original code
+            adder.add(widget, 2, gridWidget.copyPositioner().marginTop(50));
         }
-
-        // The original code
-        adder.add(widget, 2);
 
         return widget;
     }

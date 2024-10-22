@@ -28,6 +28,7 @@ public record LoginEvent(String version) implements CustomPayload {
     }
 
     public static void onLogin() {
+        ServerKeyboardBridge.clearKeyEntries();
         ClientPlayNetworking.send(new LoginEvent(ServerKeyboardBridge.VERSION));
         ServerKeyboardBridge.LOGGER.info("Sent handshake");
     }
