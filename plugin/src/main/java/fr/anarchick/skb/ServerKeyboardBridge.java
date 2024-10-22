@@ -57,12 +57,12 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         LOGGER = getLogger();
         Messenger messenger = Bukkit.getMessenger();
         messenger.registerIncomingPluginChannel(this, PluginChannels.HANDSHAKE.getId(), pluginMessageListeners);
-        messenger.registerIncomingPluginChannel(this, PluginChannels.KEY_EVENT.getId(), pluginMessageListeners);
         messenger.registerOutgoingPluginChannel(this, PluginChannels.LOAD_KEYS.getId());
+        messenger.registerIncomingPluginChannel(this, PluginChannels.KEY_EVENT.getId(), pluginMessageListeners);
 
         getServer().getPluginManager().registerEvents(this, this);
 
-        test();
+        //test();
 
         saveDefaultConfig();
         this.kickPlayerIfNoMod = getConfig().getBoolean("ifNoModDetected.kickPlayer", false);
@@ -92,18 +92,7 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         return KEY_ENTRIES.add(keyEntry);
     }
 
-    @EventHandler
-    public void keyPressed(KeyEvent event) {
-        Player player = event.getPlayer();
-        NamespacedKey namespacedKey = event.getKey();
-        boolean isPressed = event.isPressed();
-        boolean isInGui = event.isInGUI();
-        System.out.println("player = " + player);
-        System.out.println("namespacedKey = " + namespacedKey.asString());
-        System.out.println("isPressed = " + isPressed);
-        System.out.println("isInGui = " + isInGui);
-    }
-
+    @ApiStatus.Internal
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -153,5 +142,20 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         registerKey(keyEntry);
         registerKey(keyEntry2);
     }
+
+    /*
+    @EventHandler
+    public void keyPressed(KeyEvent event) {
+        Player player = event.getPlayer();
+        NamespacedKey namespacedKey = event.getKey();
+        boolean isPressed = event.isPressed();
+        boolean isInGui = event.isInGUI();
+        System.out.println("player = " + player);
+        System.out.println("namespacedKey = " + namespacedKey.asString());
+        System.out.println("isPressed = " + isPressed);
+        System.out.println("isInGui = " + isInGui);
+    }
+
+     */
 
 }
