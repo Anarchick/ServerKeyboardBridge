@@ -3,7 +3,8 @@
 
 **ServerKeyboardBridge** allow the server (Paper) to receive custom key press by the client. Without this mod, servers are not able to know which keyboard key is pressed.
 
-Supported Minecraft version for client: **1.20.1**
+Supported Minecraft version for client: **1.20.1, 1.20.4, 1.21.1**
+
 Supported Minecraft version for server: **1.20+**
 
 # Usage:
