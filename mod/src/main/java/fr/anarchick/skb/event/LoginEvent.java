@@ -10,6 +10,7 @@ import net.minecraft.network.PacketByteBuf;
 public class LoginEvent {
 
     public static void onLogin() {
+        ServerKeyboardBridge.clearKeyEntries();
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeString(ServerKeyboardBridge.VERSION);
         ClientPlayNetworking.send(PluginChannels.HANDSHAKE.getId(), buf);
