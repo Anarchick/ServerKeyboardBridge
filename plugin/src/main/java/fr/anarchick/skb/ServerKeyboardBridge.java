@@ -57,8 +57,8 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         LOGGER = getLogger();
         Messenger messenger = Bukkit.getMessenger();
         messenger.registerIncomingPluginChannel(this, PluginChannels.HANDSHAKE.getId(), pluginMessageListeners);
-        messenger.registerIncomingPluginChannel(this, PluginChannels.KEY_EVENT.getId(), pluginMessageListeners);
         messenger.registerOutgoingPluginChannel(this, PluginChannels.LOAD_KEYS.getId());
+        messenger.registerIncomingPluginChannel(this, PluginChannels.KEY_EVENT.getId(), pluginMessageListeners);
 
         getServer().getPluginManager().registerEvents(this, this);
 
@@ -92,6 +92,7 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         return KEY_ENTRIES.add(keyEntry);
     }
 
+    @ApiStatus.Internal
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -154,6 +155,7 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         System.out.println("isPressed = " + isPressed);
         System.out.println("isInGui = " + isInGui);
     }
+
      */
 
 }
