@@ -4,13 +4,10 @@ import fr.anarchick.skb.ServerKeyboardBridge;
 import fr.anarchick.skb.core.KeyEntryIO;
 import fr.anarchick.skb.core.PluginChannels;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal
