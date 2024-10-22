@@ -3,12 +3,10 @@ package fr.anarchick.skb;
 import fr.anarchick.skb.core.KeyEntry;
 import fr.anarchick.skb.core.PluginChannels;
 import fr.anarchick.skb.core.PluginMessageListeners;
-import fr.anarchick.skb.event.KeyEvent;
 import fr.anarchick.skb.event.SkbJoinEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -70,6 +68,7 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
         this.sendMessageIfNoMod = getConfig().getBoolean("ifNoModDetected.sendMessage", false);
         this.messageIfNoMod = MINI_MESSAGE.deserialize(getConfig().getString("ifNoModDetected.message", "<green>You can have a better game experience if you install the mod <white>ServerKeyboardBridge"));
 
+        Metrics metrics = new Metrics(this, 23694);
         LOGGER.info("ServerKeyboardBridge enabled");
     }
 
