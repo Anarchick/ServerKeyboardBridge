@@ -1,5 +1,6 @@
 plugins {
-    id("java")
+    id("java-library")
+    id("maven-publish")
 }
 
 base {
@@ -7,10 +8,11 @@ base {
 }
 
 group = 'fr.anarchick.skb'
-version = '1.0.0'
+version = '1.1.0'
 
 def mcVersion = '1.20'
 def mcSubVersion = '.4'
+def skriptVersion = '2.9.2'
 
 repositories {
     maven {
@@ -21,7 +23,7 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
-    //maven { url = "http://repo.choco.wtf/releases"; allowInsecureProtocol = true }
+    maven { url 'https://repo.skriptlang.org/releases' } // Skript
     mavenCentral()
     maven { url "https://jitpack.io" } // Github repositories
 }
@@ -31,6 +33,10 @@ dependencies {
     compileOnly group: 'io.papermc.paper', name: 'paper-api', version: mcVersion + mcSubVersion + '-R0.1-SNAPSHOT'
     compileOnly group: 'io.netty', name: 'netty-buffer', version: '4.1.114.Final'
     compileOnly group: 'io.netty', name: 'netty-handler', version: '4.1.114.Final'
+    compileOnly (group: 'com.github.SkriptLang', name: 'Skript', version: skriptVersion) {
+        exclude group: 'com.sk89q.worldguard', module: 'worldguard-legacy'
+        exclude group: 'net.milkbowl.vault', module: 'Vault'
+    }
     //compileOnly fileTree(include: ['*.jar'], dir: 'libs')
 }
 
@@ -57,13 +63,22 @@ processResources {
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+publishing {
+    publications {
+        myLib(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 tasks.register('export') {
     group = "other"
     description = "build gradle into external folder"
     def userHome = System.getenv('USERPROFILE').replace('\\', '/')
     def fromFile = 'build/libs/' + base.archivesName.get() + '-' + version + '.jar'
     def destinations = [
-            userHome + '/Documents/minecraft/Universe/server/FloatingRealms/plugins'
+            userHome + '/Documents/minecraft/Universe/server/FloatingRealms/plugins',
+            userHome + '/Documents/minecraft/SkriptPacket/1.21.1/plugins'
     ]
     doLast {
         destinations.each {dest ->

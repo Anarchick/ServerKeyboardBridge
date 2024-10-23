@@ -29,4 +29,10 @@ public abstract class KeyEvent extends SimpleEvent {
     public boolean isInGUI() {
         return isInGUI;
     }
+
+    @Override
+    public String toString() {
+        return String.format("KeyEvent{player=%s, key=%s, isPressed=%s, isInGUI=%s}",
+                getPlayer().getName(), key.asString(), isPressed, isInGUI);
+    }
 }

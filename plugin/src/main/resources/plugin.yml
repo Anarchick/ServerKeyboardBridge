@@ -4,6 +4,7 @@ main: fr.anarchick.skb.ServerKeyboardBridge
 description: 'ServerKeyboardBridge allow the server to received client keyboard input if the client has the mod installed'
 author: Anarchick
 website: 'https://github.com/Anarchick/ServerKeyboardBridge'
+softdepend: [Skript]
 api-version: '1.20'
 permissions:
   serverkeyboardbridge.bypass.*:

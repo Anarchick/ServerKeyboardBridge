@@ -1,8 +1,11 @@
 package fr.anarchick.skb;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptAddon;
 import fr.anarchick.skb.core.KeyEntry;
 import fr.anarchick.skb.core.PluginChannels;
 import fr.anarchick.skb.core.PluginMessageListeners;
+import fr.anarchick.skb.event.KeyEvent;
 import fr.anarchick.skb.event.SkbJoinEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -11,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 import org.jetbrains.annotations.ApiStatus;
@@ -53,12 +57,29 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
     public void onEnable() {
         INSTANCE = this;
         LOGGER = getLogger();
+        @NotNull PluginManager pluginManager = Bukkit.getPluginManager();
         Messenger messenger = Bukkit.getMessenger();
         messenger.registerIncomingPluginChannel(this, PluginChannels.HANDSHAKE.getId(), pluginMessageListeners);
         messenger.registerOutgoingPluginChannel(this, PluginChannels.LOAD_KEYS.getId());
         messenger.registerIncomingPluginChannel(this, PluginChannels.KEY_EVENT.getId(), pluginMessageListeners);
 
-        getServer().getPluginManager().registerEvents(this, this);
+        pluginManager.registerEvents(this, this);
+
+        if (pluginManager.isPluginEnabled("Skript")) {
+            try {
+                if (Skript.isAcceptRegistrations()) {
+                    SkriptAddon skriptAddon = Skript.registerAddon(this);
+                    skriptAddon.loadClasses("fr.anarchick.skb", "skript");
+                    info("Skript is detected.");
+                } else {
+                    LOGGER.warning("Skript is not accepting registrations. SkriptAddon will not be loaded.");
+                }
+            } catch ( Exception e ) {
+                e.printStackTrace();
+                LOGGER.warning("Failed to load SkriptAddon");
+                return;
+            }
+        }
 
         //test();
 
@@ -88,6 +109,7 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
             LOGGER.warning("Key entries limit reached. Can't add : " + keyEntry);
             return false;
         }
+        KEY_ENTRIES.remove(keyEntry);
         return KEY_ENTRIES.add(keyEntry);
     }
 
@@ -145,16 +167,8 @@ public final class ServerKeyboardBridge extends JavaPlugin implements org.bukkit
     /*
     @EventHandler
     public void keyPressed(KeyEvent event) {
-        Player player = event.getPlayer();
-        NamespacedKey namespacedKey = event.getKey();
-        boolean isPressed = event.isPressed();
-        boolean isInGui = event.isInGUI();
-        System.out.println("player = " + player);
-        System.out.println("namespacedKey = " + namespacedKey.asString());
-        System.out.println("isPressed = " + isPressed);
-        System.out.println("isInGui = " + isInGui);
+        System.out.println("event = " + event);
     }
-
      */
 
 }
